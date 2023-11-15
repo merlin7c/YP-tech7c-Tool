@@ -1,15 +1,22 @@
 import streamlit as st
-import requests
-from bs4 import BeautifulSoup
+from yp_scraper import yp_au_scrape
 
-st.header('Budget Food Hub!')
+st.header("YP Tech7c Tool")
 
-url = "http://quotes.toscrape.com"
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
-# print(soup.prettify())
-quotes = soup.find('span', class_='text').text
-# print(quotes)
-# print(response.text)
-st.write(quotes)
-# st.write(response.text)
+st.write("Enter the Searching Data")
+
+# Country dropdown options
+countries = ["Austrailia", "USA", "Canada", "New Zealand"]
+
+# Form inputs
+country = st.selectbox("Select Country", countries)
+name = st.text_input("Search Name")
+city = st.text_input("City")
+
+# Submit button
+if st.button("Collect Data"):
+    # Validation check
+    if country and name and city:
+        st.write(f"Collected Data for : {name}, {city}, {country}")
+    else:
+        st.warning("Please fill in all the inputs before collecting data.")
