@@ -27,6 +27,7 @@ def yp_au_scrape(clue="", loc_clue="", direct_url=""):
             main_url = f"https://www.yellowpages.com.au/search/listings?clue={clue}&locationClue={loc_clue}"
 
         st.write(f"Searching URL: {main_url}")
+        progress_bar = st.progress(0)
         main_resp = requests.get(main_url, headers={"User-Agent": "Mozilla/5.0"})
         main_soup = Bs(main_resp.text, "html.parser")
         dom = etree.HTML(str(main_soup))
@@ -123,6 +124,8 @@ def yp_au_scrape(clue="", loc_clue="", direct_url=""):
                     cnt += 1
                 except Exception as e:
                     print(e)
+
+            progress_bar.progress((page / (max_page - 1)))
 
     except Exception as e:
         print(e)
